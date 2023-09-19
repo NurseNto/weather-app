@@ -1,0 +1,48 @@
+/* src/app/weather/weather.component.css */
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-image: url('https://img.freepik.com/free-vector/realistic-blue-sky-background_1048-6707.jpg?t=st=1695131710~exp=1695132310~hmac=3ef68cf3258978173ae39a7dc9f9d3d3d08564a38fa6b24ff2dd33bde847bb90');
+// background-color:cadetblue;
+}
+
+.weather-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.weather-info p {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.add-city-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens (e.g., mobile) */
+  .weather-container {
+    padding: 10px;
+  }
+
+    /* Adjust styles for smaller screens (e.g., mobile) */
+    .weather-info {
+      font-size: 16px;
+      padding: 15px;
+    }
+  
+    .weather-info p {
+      font-size: 14px;
+    }
+
+  /* Adjust other styles as needed */
+}

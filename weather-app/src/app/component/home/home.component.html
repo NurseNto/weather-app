@@ -1,31 +1,12 @@
-<div class="home">
-  <div class="overlap">
-    <div class="image">
-      <img class="photo" alt="Photo" src="assets/images/background.png" />
-    </div>
-    <div class="rectangle"></div>
-    <div class="house">
-      <img class="img" alt="House" src="assets/images/house.png" />
-    </div>
-    <app-compWeather
-      class="weather-instance"
-      [divClassName]="'design-component-instance-node'"
-      [divClassNameOverride]="'weather-2'"
-      [mostlyClearHLClassName]="'weather-3'"
-    ></app-compWeather>
-    <app-status-bar
-      [batteryClassName]="'status-bar-2'"
-      [cap]="'image.svg'"
-      [capClassName]="'status-bar-5'"
-      [capacityClassName]="'status-bar-4'"
-      [cellularConnection]="'cellular-connection-2.svg'"
-      [cellularConnectionClassName]="'status-bar-7'"
-      class="status-bar-instance"
-      [overlapGroupClassName]="'status-bar-3'"
-      [timeClassName]="'status-bar-9'"
-      [timeStyleClassName]="'status-bar-8'"
-      [wifi]="'wifi-2.svg'"
-      [wifiClassName]="'status-bar-6'"
-    ></app-status-bar>
+
+<div class="weather-container">
+  <div class="background-image"></div>
+  <div class="weather-info">
+    <h2>Weather in Johannesburg</h2>
+    <p>Temperature: {{ weatherData.main.temp |  number:'1.0-0' | slice:0:2 }}°C</p>
+    <p>Description: {{ weatherData.weather[0].description | titlecase }}</p>
+  </div>
+  <div class="add-city-button">
+    <button routerLink="/add-city">Add City</button>
   </div>
 </div>

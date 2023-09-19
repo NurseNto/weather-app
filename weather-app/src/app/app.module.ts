@@ -7,18 +7,17 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { WeatherComponent } from './pages/weather/weather.component';
 import { WeatherService } from './service/weather.service';
-import { StatusBarComponent } from './component/status-bar/status-bar.component';
-import { CompWeatherComponent } from './component/compWeather/compWeather.component';
 import { HomeComponent } from './component/home/home.component';
+import { AddCityComponent } from './component/addCity/addCity.component';
+
 
 
 
 @NgModule({
   declarations: [
     WeatherComponent,
-    StatusBarComponent,
-    CompWeatherComponent,
     HomeComponent,
+    AddCityComponent,
     AppComponent
   ],
   imports: [
