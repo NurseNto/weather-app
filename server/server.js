@@ -16,20 +16,22 @@ const cityRouter = express.Router();
 app.use('/cities', cityRouter);
 
 // Endpoint to add a new city
-cityRouter.post('/', async (req, res) => {
-  try {
-    const { name } = req.body;
-    if (!name) {
-      return res.status(400).json({ error: 'City name is required' });
-    }
+// cityRouter.post('/', async (req, res) => {
+//   try {
+//     const { name } = req.body;
+//     if (!name) {
+//       return res.status(400).json({ error: 'City name is required' });
+//     }
 
-    const newCity = await pool.query('INSERT INTO cities (name) VALUES ($1) RETURNING *', [name]);
-    res.json(newCity.rows[0]);
-  } catch (error) {
-    console.error('Error adding city:', error);
-    res.status(500).json({ error: 'An error occurred while adding the city' });
-  }
-});
+//     const newCity = await pool.query('INSERT INTO cities (name) VALUES ($1) RETURNING *', [name]);
+//     res.json(newCity.rows[0]);
+//   } catch (error) {
+//     console.error('Error adding city:', error);
+//     res.status(500).json({ error: 'An error occurred while adding the city' });
+//   }
+// });
+
+
 
 // Endpoint to retrieve the list of saved cities
 cityRouter.get('/', async (req, res) => {
@@ -41,6 +43,33 @@ cityRouter.get('/', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while retrieving cities' });
   }
 });
+
+cityRouter.post('/', async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name) {
+      return res.status(400).json({ error: 'City name is required' });
+    }
+console.log('city in backend' + name);
+    // Fetch weather data from the OpenWeatherMap API here
+    const weatherResponse = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${apiKey}`
+    );
+
+    // Save the city and weather data to the database
+    const newCity = await pool.query(
+      'INSERT INTO cities (name, description, max_temp, min_temp) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, weatherResponse.data.weather[0].description, weatherResponse.data.main.temp, weatherResponse.data.main.temp_min]
+    );
+
+    res.json(newCity.rows[0]);
+  } catch (error) {
+    console.error('Error adding city:', error);
+    res.status(500).json({ error: 'An error occurred while adding the city' });
+  }
+});
+
+
 
 // Endpoint to update a city by ID
 cityRouter.put('/:id', async (req, res) => {
@@ -59,6 +88,8 @@ cityRouter.put('/:id', async (req, res) => {
   }
 });
 
+
+
 // Endpoint to delete a city by ID
 cityRouter.delete('/:id', async (req, res) => {
   try {
@@ -75,11 +106,22 @@ cityRouter.delete('/:id', async (req, res) => {
 app.get('/weather', async (req, res) => {
   try {
     const city = req.query.city;
+     // Execute a query to retrieve city data from your database
+    const { rows } = await pool.query('SELECT * FROM cities WHERE name = $1', [city]);
+
+    if (rows.length === 0) {
+      // City not found in the database
+      return res.status(404).json({ error: 'City not found' });
+    }
+    
+   // Get the first row (assuming city names are unique)
+   const cityData = rows[0];
+
     const weatherResponse = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
     );
 
-    res.json(weatherResponse.data);
+    res.json({ city: cityData, weather: weatherResponse.data });
   } catch (error) {
     console.error('Error fetching weather data:', error);
     res.status(500).json({ error: 'An error occurred while fetching weather data.' });

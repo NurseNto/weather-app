@@ -1,5 +1,5 @@
 <!-- src/app/add-city/add-city.component.html -->
-<div class="add-city-container">
+<!-- <div class="add-city-container">
   <h2>Add City</h2>
   <div class="search-bar">
     <input type="text" placeholder="Enter a city" [(ngModel)]="newCity">
@@ -13,4 +13,61 @@
       <div class="delete-button" (click)="deleteCity(i)">Delete</div>
     </div>
   </div>
+</div> -->
+
+<!-- src/app/add-city/add-city.component.html -->
+<div class="add-city-container">
+  <h2>Add City</h2>
+
+  <!-- Add City Form -->
+  <form (ngSubmit)="addCity()">
+    <input type="text" [(ngModel)]="newCityName" name="cityName" placeholder="Enter city name">
+    <button type="submit">Add</button>
+  </form>
+
+  <!-- List of Added Cities -->
+  <div class="added-cities">
+    <div *ngFor="let city of addedCity; let i = index" class="city-card">
+      <div class="card-content">
+        <p>{{ city.name }}</p>
+      </div>
+      <div class="delete-button" (click)="deleteCity(city.id)">Delete</div>
+    </div>
+  </div>
+
+  <!-- <div class="added-cities">
+    <div *ngFor="let city of cities; let i = index" class="city-card">
+      <div class="card-content">
+        <p>{{ city.name }}</p>
+      </div>
+      <div class="delete-button" (click)="deleteCity(i)">Delete</div>
+    </div>
+  </div>
+</div> -->
+
+<div class="added-cities">
+  <div *ngFor="let city of cities; let i = index" class="city-card">
+   
+      <div class="card-content">
+        <div class="card-content">
+          <!-- City Name -->
+          <p class="city-name">{{ city.name }}</p>
+    
+          <!-- Description -->
+          <p class="description">{{ city.description }}</p>
+        </div>
+        
+        <div class="temperature">
+          <!-- Main Temperature -->
+          <p class="main-temp">{{ city.mainTemp |  number:'1.0-0' | slice:0:2  }}°C</p>
+    
+          <!-- Min Temperature -->
+          <p class="min-temp">Min: {{ city.minTemp |  number:'1.0-0' | slice:0:2  }}°C</p>
+        </div>
+      </div>
+   
+  </div>
 </div>
+
+
+
