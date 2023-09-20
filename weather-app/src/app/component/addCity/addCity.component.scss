@@ -1,0 +1,22 @@
+/* src/app/add-city/add-city.component.css */
+.city-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .delete-button {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #cc0000;
+  }
+  

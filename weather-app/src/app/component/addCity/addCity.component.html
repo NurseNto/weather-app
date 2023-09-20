@@ -1,3 +1,16 @@
-<p>
-  addCity works!
-</p>
+<!-- src/app/add-city/add-city.component.html -->
+<div class="add-city-container">
+  <h2>Add City</h2>
+  <div class="search-bar">
+    <input type="text" placeholder="Enter a city" [(ngModel)]="newCity">
+    <button (click)="addCity()">Add</button>
+  </div>
+  <div class="added-cities">
+    <div *ngFor="let city of cities; let i = index" class="city-card" [@slideInOut]="slideState">
+      <div class="card-content">
+        <p>{{ city }}</p>
+      </div>
+      <div class="delete-button" (click)="deleteCity(i)">Delete</div>
+    </div>
+  </div>
+</div>
